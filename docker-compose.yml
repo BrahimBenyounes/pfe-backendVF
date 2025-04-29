@@ -2,21 +2,7 @@ version: '3.8'
 
 services:
 
-   ## front end 
- 
-
-
-  frontend:
-    container_name: angular-front
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    ports:
-      - "4200:80"
-    environment:
-      - NODE_OPTIONS=--openssl-legacy-provider
-    networks:
-      - tokkom
+  
 
 
 
