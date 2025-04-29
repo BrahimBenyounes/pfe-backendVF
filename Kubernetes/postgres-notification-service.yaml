@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-notification-service
+  template:
+    metadata:
+      labels:
+        app: postgres-notification-service
+    spec:
+      containers:
+        - name: postgres-notification-service
+          image: postgres:latest
+          env:
+            - name: POSTGRES_DB
+              value: "notification_service"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: PGDATA
+              value: "/data/postgres"
+          volumeMounts:
+            - mountPath: /data/postgres
+              name: postgres-volume
+          ports:
+            - containerPort: 5432
+      volumes:
+        - name: postgres-volume
+          persistentVolumeClaim:
+            claimName: postgres-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-notification-service
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres-notification-service
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,0 +1,15 @@
+com\bys\product\model\Product.class
+com\bys\product\dto\request\ProductStockRequest.class
+com\bys\product\dto\request\ProductStockRequest$ProductStockRequestBuilder.class
+com\bys\product\service\ProductService.class
+com\bys\product\dto\request\ProductRequest.class
+com\bys\product\dto\response\ProductResponse$ProductResponseBuilder.class
+com\bys\product\model\Product$ProductBuilder.class
+com\bys\product\dto\response\ProductResponse.class
+com\bys\product\dto\request\ProductRequest$ProductRequestBuilder.class
+com\bys\product\ProductApplication.class
+com\bys\product\service\ProductServiceImpl.class
+com\bys\product\contoller\ProductController.class
+com\bys\product\repository\ProductRepository.class
+com\bys\product\dto\response\ProductStockResponse$ProductStockResponseBuilder.class
+com\bys\product\dto\response\ProductStockResponse.class

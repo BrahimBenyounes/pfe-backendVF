@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-pfe-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-pfe-service
+  template:
+    metadata:
+      labels:
+        app: mysql-pfe-service
+    spec:
+      containers:
+        - name: mysql-pfe-service
+          image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "root"
+            - name: MYSQL_DATABASE
+              value: "pfe_db"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-pfe-volume
+          ports:
+            - containerPort: 3306
+      volumes:
+        - name: mysql-pfe-volume
+          persistentVolumeClaim:
+            claimName: mysql-pfe-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-pfe-service
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql-pfe-service
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pfe-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

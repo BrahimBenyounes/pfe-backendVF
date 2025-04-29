@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: brahim2025/product-service:latest
+          env:
+            - name: SPRING_APPLICATION_JSON
+              value: '{"spring.data.mongodb.host" : "mongo-product-service"}'
+          ports:
+            - containerPort: 8085
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  ports:
+    - port: 8085
+      targetPort: 8085
+  selector:
+    app: product-service
